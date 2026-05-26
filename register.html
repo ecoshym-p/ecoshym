@@ -57,5 +57,16 @@
   </main>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="auth.js"></script>
+<script>
+  window.addEventListener("load", async () => {
+    if (!window.supabase) return;
+    const sb = window.supabase.createClient(
+      "https://fdxnoirzzmmhqexhrttn.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkeG5vaXJ6em1taHFleGhydHRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4ODAyMTcsImV4cCI6MjA5MjQ1NjIxN30.4J6xKeQrj-OK34FaCdEHAsbgnONxv-JV8XUrgyhr4v4"
+    );
+    const { data: { user } } = await sb.auth.getUser();
+    if (user) window.location.href = "profile.html";
+  });
+</script>
 </body>
 </html>
