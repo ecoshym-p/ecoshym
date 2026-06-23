@@ -1,306 +1,365 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Replies | EcoShymkent</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-  <style>
-    .replies-shell {
-      width: min(680px, 96%);
-      margin: 0 auto;
-      padding: 2rem 0 3rem;
-    }
-    .back-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      color: var(--muted);
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-decoration: none;
-      margin-bottom: 1.25rem;
-      padding: 0.4rem 0.75rem;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: #fff;
-      cursor: pointer;
-    }
-    .back-btn:hover { background: #f0f4fb; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Replies | EcoShymkent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+.replies-shell {
+width: min(680px, 96%);
+margin: 0 auto;
+padding: 2rem 0 3rem;
+}
+.back-btn {
+display: inline-flex;
+align-items: center;
+gap: 0.4rem;
+color: var(--muted);
+font-weight: 600;
+font-size: 0.9rem;
+text-decoration: none;
+margin-bottom: 1.25rem;
+padding: 0.4rem 0.75rem;
+border-radius: 999px;
+border: 1px solid var(--border);
+background: #fff;
+cursor: pointer;
+}
+.back-btn:hover { background: #f0f4fb; }
 
-    /* Главный коммент */
-    .original-comment {
-      background: var(--hero-grad);
-      border-radius: 16px;
-      padding: 1.2rem 1.4rem;
-      color: #fff;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 8px 24px rgba(22,57,98,0.15);
-    }
-    .oc-top { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem; }
-    .oc-avatar {
-      width: 38px; height: 38px; min-width: 38px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.25);
-      border: 2px solid rgba(255,255,255,0.4);
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 1rem; color: #fff;
-    }
-    .oc-author { font-weight: 700; font-size: 1rem; }
-    .oc-time { font-size: 0.78rem; opacity: 0.75; }
-    .oc-text { font-size: 1.05rem; line-height: 1.5; margin-bottom: 0.6rem; }
-    .oc-actions { display: flex; align-items: center; gap: 0.75rem; }
-    .oc-like {
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 999px;
-      padding: 0.3rem 0.7rem;
-      color: #fff;
-      cursor: pointer;
-      font-size: 0.85rem;
-      display: flex; align-items: center; gap: 0.3rem;
-      transition: background 0.15s;
-    }
-    .oc-like:hover { background: rgba(255,255,255,0.25); }
-    .oc-like.liked { background: rgba(255,255,255,0.3); font-weight: 700; }
-    .oc-meta { font-size: 0.8rem; opacity: 0.7; }
+/* Главный коммент */
+.original-comment {
+  background: var(--hero-grad);
+  border-radius: 16px;
+  padding: 1.2rem 1.4rem;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 24px rgba(22,57,98,0.15);
+}
+.oc-top { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem; }
+.oc-avatar {
+  width: 38px; height: 38px; min-width: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  border: 2px solid rgba(255,255,255,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 1rem; color: #fff;
+}
+.oc-author { font-weight: 700; font-size: 1rem; }
+.oc-time { font-size: 0.78rem; opacity: 0.75; }
+.oc-text { font-size: 1.05rem; line-height: 1.5; margin-bottom: 0.6rem; }
+.oc-actions { display: flex; align-items: center; gap: 0.75rem; }
+.oc-like {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex; align-items: center; gap: 0.3rem;
+  transition: background 0.15s;
+}
+.oc-like:hover { background: rgba(255,255,255,0.25); }
+.oc-like.liked { background: rgba(255,255,255,0.3); font-weight: 700; }
+.oc-meta { font-size: 0.8rem; opacity: 0.7; }
 
-    /* Ответы */
-    .replies-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.75rem;
-    }
-    .replies-list {
-      display: grid;
-      gap: 0.5rem;
-      margin-bottom: 1.25rem;
-    }
-    .reply-item {
-      display: flex;
-      gap: 0.6rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 0.85rem 1rem;
-    }
-    .reply-avatar {
-      width: 34px; height: 34px; min-width: 34px;
-      border-radius: 50%;
-      background: var(--hero-grad);
-      color: #fff;
-      font-weight: 700; font-size: 0.85rem;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .reply-body { flex: 1; min-width: 0; }
-    .reply-header {
-      display: flex; align-items: center;
-      gap: 0.5rem; margin-bottom: 0.2rem; flex-wrap: wrap;
-    }
-    .reply-author { font-weight: 700; font-size: 0.88rem; }
-    .reply-time { font-size: 0.76rem; color: var(--muted); }
-    .reply-to { font-size: 0.82rem; color: var(--accent); font-weight: 600; }
-    .reply-text { font-size: 0.92rem; line-height: 1.45; word-break: break-word; }
-    .reply-actions {
-      display: flex; align-items: center;
-      gap: 0.6rem; margin-top: 0.4rem;
-    }
-    .reply-delete {
-      margin-left: auto;
-      background: none; border: none;
-      color: #cc3333; cursor: pointer;
-      font-size: 0.75rem; padding: 0.1rem 0.3rem;
-      border-radius: 4px; opacity: 0.6;
-    }
-    .reply-delete:hover { opacity: 1; background: #fff0f0; }
-    .reply-btn {
-      background: none; border: none;
-      color: var(--accent); font-weight: 600;
-      font-size: 0.82rem; cursor: pointer;
-      padding: 0.2rem 0.4rem; border-radius: 999px;
-    }
-    .reply-btn:hover { background: var(--accent-soft); }
+/* Ответы */
+.replies-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+.replies-list {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+.reply-item {
+  display: flex;
+  gap: 0.6rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+}
+.reply-avatar {
+  width: 34px; height: 34px; min-width: 34px;
+  border-radius: 50%;
+  background: var(--hero-grad);
+  color: #fff;
+  font-weight: 700; font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.reply-body { flex: 1; min-width: 0; }
+.reply-header {
+  display: flex; align-items: center;
+  gap: 0.5rem; margin-bottom: 0.2rem; flex-wrap: wrap;
+}
+.reply-author { font-weight: 700; font-size: 0.88rem; }
+.reply-time { font-size: 0.76rem; color: var(--muted); }
+.reply-to { font-size: 0.82rem; color: var(--accent); font-weight: 600; }
+.reply-text { font-size: 0.92rem; line-height: 1.45; word-break: break-word; }
+.reply-actions {
+  display: flex; align-items: center;
+  gap: 0.6rem; margin-top: 0.4rem;
+}
+.reply-delete {
+  margin-left: auto;
+  background: none; border: none;
+  color: #cc3333; cursor: pointer;
+  font-size: 0.75rem; padding: 0.1rem 0.3rem;
+  border-radius: 4px; opacity: 0.6;
+}
+.reply-delete:hover { opacity: 1; background: #fff0f0; }
+.reply-btn {
+  background: none; border: none;
+  color: var(--accent); font-weight: 600;
+  font-size: 0.82rem; cursor: pointer;
+  padding: 0.2rem 0.4rem; border-radius: 999px;
+}
+.reply-btn:hover { background: var(--accent-soft); }
 
-    /* Форма ответа */
-    .new-reply-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.1rem;
-      box-shadow: 0 4px 16px rgba(17,40,73,0.06);
-      position: sticky;
-      bottom: 1rem;
-    }
-    .new-reply-box h4 { margin: 0 0 0.6rem; font-size: 0.95rem; color: var(--text); }
-    .replying-to-label {
-      font-size: 0.82rem; color: var(--accent);
-      font-weight: 600; margin-bottom: 0.5rem;
-      display: none;
-    }
-    .new-reply-wrap {
-      display: flex; gap: 0.5rem; align-items: center;
-    }
-    .new-reply-input {
-      flex: 1;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 0.55rem 1rem;
-      font: inherit; font-size: 0.9rem;
-      background: #f8fbff;
-      margin-top: 0 !important;
-    }
-    .new-reply-input:focus { outline: 2px solid var(--ring); }
-    .new-reply-input:disabled { background: #f0f4fa; cursor: not-allowed; }
-    .empty-replies {
-      text-align: center; padding: 2rem;
-      color: var(--muted); font-size: 0.92rem;
-    }
-  </style>
+/* Форма ответа */
+.new-reply-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.1rem;
+  box-shadow: 0 4px 16px rgba(17,40,73,0.06);
+  position: sticky;
+  bottom: 1rem;
+}
+.new-reply-box h4 { margin: 0 0 0.6rem; font-size: 0.95rem; color: var(--text); }
+.replying-to-label {
+  font-size: 0.82rem; color: var(--accent);
+  font-weight: 600; margin-bottom: 0.5rem;
+  display: none;
+}
+.new-reply-wrap {
+  display: flex; gap: 0.5rem; align-items: center;
+}
+.new-reply-input {
+  flex: 1;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.55rem 1rem;
+  font: inherit; font-size: 0.9rem;
+  background: #f8fbff;
+  margin-top: 0 !important;
+}
+.new-reply-input:focus { outline: 2px solid var(--ring); }
+.new-reply-input:disabled { background: #f0f4fa; cursor: not-allowed; }
+.empty-replies {
+  text-align: center; padding: 2rem;
+  color: var(--muted); font-size: 0.92rem;
+}
+</style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="brand" href="index.html">EcoShymkent</a>
-      <nav class="site-nav">
-        <a href="index.html">Home</a>
-        <a href="index.html#report">Report Pollution</a>
-      </nav>
+<header class="site-header">
+<div class="container nav-wrap">
+<a class="brand" href="index.html">EcoShymkent</a>
+<nav class="site-nav">
+<a href="index.html">Home</a>
+<a href="index.html#report">Report Pollution</a>
+</nav>
+</div>
+</header>
+<main>
+<div class="replies-shell">
+<a class="back-btn" href="index.html#report">← Back to reports</a>
+<div id="originalComment"></div>
+<div class="replies-title" id="repliesTitle">Replies</div>
+<div class="replies-list" id="repliesList">
+<div class="empty-replies">Loading...</div>
+</div>
+
+  <div class="new-reply-box">
+    <h4>💬 Write a reply</h4>
+    <div class="replying-to-label" id="replyingToLabel"></div>
+    <div class="new-reply-wrap">
+      <div class="reply-avatar" id="replyAvatar">?</div>
+      <input type="text" class="new-reply-input" id="replyInput" placeholder="Login to reply..." disabled />
+      <button class="btn-send-comment" id="replySendBtn">Send</button>
     </div>
-  </header>
+  </div>
+</div>
+</main>
+<footer class="site-footer">
+<div class="container footer-wrap">
+<p>EcoShymkent | Citizen Ecology Awareness Platform</p>
+<a href="index.html">Back to Home</a>
+</div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPA_URL = "https://fdxnoirzzmmhqexhrttn.supabase.co";
+const SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkeG5vaXJ6em1taHFleGhydHRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4ODAyMTcsImV4cCI6MjA5MjQ1NjIxN30.4J6xKeQrj-OK34FaCdEHAsbgnONxv-JV8XUrgyhr4v4";
 
-  <main>
-    <div class="replies-shell">
-      <a class="back-btn" href="index.html#report">← Back to reports</a>
-      <div id="originalComment"></div>
-      <div class="replies-title" id="repliesTitle">Replies</div>
-      <div class="replies-list" id="repliesList">
-        <div class="empty-replies">Loading...</div>
-      </div>
+const params = new URLSearchParams(window.location.search);
+const reportId = params.get("report");
+const commentId = params.get("comment");
 
-      <div class="new-reply-box">
-        <h4>💬 Write a reply</h4>
-        <div class="replying-to-label" id="replyingToLabel"></div>
-        <div class="new-reply-wrap">
-          <div class="reply-avatar" id="replyAvatar">?</div>
-          <input type="text" class="new-reply-input" id="replyInput" placeholder="Login to reply..." disabled />
-          <button class="btn-send-comment" id="replySendBtn">Send</button>
-        </div>
-      </div>
-    </div>
-  </main>
+let replyingToId = commentId;
+let replyingToAuthor = null;
 
-  <footer class="site-footer">
-    <div class="container footer-wrap">
-      <p>EcoShymkent | Citizen Ecology Awareness Platform</p>
-      <a href="index.html">Back to Home</a>
-    </div>
-  </footer>
+function escapeHTML(str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    const SUPA_URL = "https://fdxnoirzzmmhqexhrttn.supabase.co";
-    const SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkeG5vaXJ6em1taHFleGhydHRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4ODAyMTcsImV4cCI6MjA5MjQ1NjIxN30.4J6xKeQrj-OK34FaCdEHAsbgnONxv-JV8XUrgyhr4v4";
+function formatTime(ts) {
+  if (!ts) return "";
+  const d = new Date(ts);
+  const now = new Date();
+  const diff = Math.floor((now - d) / 1000);
+  if (diff < 60) return "just now";
+  if (diff < 3600) return Math.floor(diff / 60) + "m ago";
+  if (diff < 86400) return Math.floor(diff / 3600) + "h ago";
+  if (diff < 604800) return Math.floor(diff / 86400) + "d ago";
+  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+}
 
-    const params = new URLSearchParams(window.location.search);
-    const reportId = params.get("report");
-    const commentId = params.get("comment");
+window.addEventListener("load", async () => {
+  if (!window.supabase || !reportId || !commentId) return;
+  const sb = window.supabase.createClient(SUPA_URL, SUPA_KEY);
 
-    // Кому отвечаем — по умолчанию на главный коммент
-    let replyingToId = commentId;
-    let replyingToAuthor = null;
+  const { data: { user } } = await sb.auth.getUser();
+  const currentUser = user || null;
+  const userName = currentUser?.user_metadata?.full_name || "Anonymous";
 
-    function formatTime(ts) {
-      if (!ts) return "";
-      const d = new Date(ts);
-      const now = new Date();
-      const diff = Math.floor((now - d) / 1000);
-      if (diff < 60) return "just now";
-      if (diff < 3600) return Math.floor(diff / 60) + "m ago";
-      if (diff < 86400) return Math.floor(diff / 3600) + "h ago";
-      if (diff < 604800) return Math.floor(diff / 86400) + "d ago";
-      return d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+  if (currentUser) {
+    document.getElementById("replyAvatar").textContent = escapeHTML(userName.charAt(0).toUpperCase());
+    const input = document.getElementById("replyInput");
+    input.disabled = false;
+    input.placeholder = "Write a reply...";
+  }
+
+  async function getAll() {
+    const { data } = await sb.from("reports").select("comments").eq("id", reportId).single();
+    return Array.isArray(data?.comments) ? data.comments : [];
+  }
+
+  async function loadPage() {
+    const allComments = await getAll();
+    const parent = allComments.find(c => c.id === commentId);
+    if (!parent) {
+      document.getElementById("originalComment").innerHTML = `<p style="color:var(--muted)">Comment not found.</p>`;
+      return;
     }
 
-    window.addEventListener("load", async () => {
-      if (!window.supabase || !reportId || !commentId) return;
-      const sb = window.supabase.createClient(SUPA_URL, SUPA_KEY);
-
-      const { data: { user } } = await sb.auth.getUser();
-      const currentUser = user || null;
-      const userName = currentUser?.user_metadata?.full_name || "Anonymous";
-
-      if (currentUser) {
-        document.getElementById("replyAvatar").textContent = userName.charAt(0).toUpperCase();
-        const input = document.getElementById("replyInput");
-        input.disabled = false;
-        input.placeholder = "Write a reply...";
-      }
-
-      async function getAll() {
-        const { data } = await sb.from("reports").select("comments").eq("id", reportId).single();
-        return Array.isArray(data?.comments) ? data.comments : [];
-      }
-
-      async function loadPage() {
-        const allComments = await getAll();
-        const parent = allComments.find(c => c.id === commentId);
-        if (!parent) {
-          document.getElementById("originalComment").innerHTML = `<p style="color:var(--muted)">Comment not found.</p>`;
-          return;
+    const threadIds = new Set([commentId]);
+    let changed = true;
+    while (changed) {
+      changed = false;
+      allComments.forEach(c => {
+        if (c.parentId && threadIds.has(c.parentId) && !threadIds.has(c.id)) {
+          threadIds.add(c.id);
+          changed = true;
         }
+      });
+    }
+    const replies = allComments.filter(c => c.id !== commentId && threadIds.has(c.id))
+      .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
 
-        // Все ответы — и прямые и вложенные (все у кого parentId совпадает с commentId или с другим ответом)
-        // Собираем все id которые относятся к этому треду
-        const threadIds = new Set([commentId]);
-        let changed = true;
-        while (changed) {
-          changed = false;
-          allComments.forEach(c => {
-            if (c.parentId && threadIds.has(c.parentId) && !threadIds.has(c.id)) {
-              threadIds.add(c.id);
-              changed = true;
-            }
-          });
-        }
-        const replies = allComments.filter(c => c.id !== commentId && threadIds.has(c.id))
-          .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    const parentLikes = parent.likes || 0;
+    const parentLikedBy = parent.likedBy || [];
+    const parentHasLiked = currentUser && parentLikedBy.includes(currentUser.email);
 
-        // Лайк главного комментария
-        const parentLikes = parent.likes || 0;
-        const parentLikedBy = parent.likedBy || [];
-        const parentHasLiked = currentUser && parentLikedBy.includes(currentUser.email);
+    document.getElementById("originalComment").innerHTML = `
+      <div class="original-comment">
+        <div class="oc-top">
+          <div class="oc-avatar">${escapeHTML((parent.author || "A").charAt(0).toUpperCase())}</div>
+          <div>
+            <div class="oc-author">${escapeHTML(parent.author || "Anonymous")}</div>
+            <div class="oc-time">${formatTime(parent.createdAt)}</div>
+          </div>
+        </div>
+        <div class="oc-text">${escapeHTML(parent.text || "")}</div>
+        <div class="oc-actions">
+          <button class="oc-like ${parentHasLiked ? "liked" : ""}" id="parentLikeBtn">
+            <span>${parentHasLiked ? "❤️" : "🤍"}</span>
+            <span id="parentLikeCount">${parentLikes}</span>
+          </button>
+          <span class="oc-meta">${replies.length} repl${replies.length !== 1 ? "ies" : "y"}</span>
+        </div>
+      </div>
+    `;
 
-        document.getElementById("originalComment").innerHTML = `
-          <div class="original-comment">
-            <div class="oc-top">
-              <div class="oc-avatar">${(parent.author || "A").charAt(0).toUpperCase()}</div>
-              <div>
-                <div class="oc-author">${parent.author || "Anonymous"}</div>
-                <div class="oc-time">${formatTime(parent.createdAt)}</div>
-              </div>
+    document.getElementById("parentLikeBtn").addEventListener("click", async () => {
+      if (!currentUser) { alert("Please login to like."); return; }
+      const comments = await getAll();
+      const idx = comments.findIndex(x => x.id === commentId);
+      if (idx === -1) return;
+      const lb = comments[idx].likedBy || [];
+      if (lb.includes(currentUser.email)) {
+        comments[idx].likedBy = lb.filter(e => e !== currentUser.email);
+        comments[idx].likes = Math.max(0, (comments[idx].likes || 1) - 1);
+      } else {
+        comments[idx].likedBy = [...lb, currentUser.email];
+        comments[idx].likes = (comments[idx].likes || 0) + 1;
+      }
+      await sb.from("reports").update({ comments }).eq("id", reportId);
+      await loadPage();
+    });
+
+    document.getElementById("repliesTitle").textContent =
+      `${replies.length} Repl${replies.length !== 1 ? "ies" : "y"}`;
+
+    const list = document.getElementById("repliesList");
+    if (!replies.length) {
+      list.innerHTML = `<div class="empty-replies">No replies yet. Be the first!</div>`;
+    } else {
+      list.innerHTML = "";
+      replies.forEach(r => {
+        const isOwner = currentUser && (currentUser.user_metadata?.full_name === r.author || currentUser.email === r.author);
+        const likes = r.likes || 0;
+        const likedBy = r.likedBy || [];
+        const hasLiked = currentUser && likedBy.includes(currentUser.email);
+
+        const replyTarget = r.parentId !== commentId
+          ? allComments.find(x => x.id === r.parentId)
+          : null;
+
+        const div = document.createElement("div");
+        div.className = "reply-item";
+        div.innerHTML = `
+          <div class="reply-avatar">${escapeHTML((r.author || "A").charAt(0).toUpperCase())}</div>
+          <div class="reply-body">
+            <div class="reply-header">
+              <span class="reply-author">${escapeHTML(r.author || "Anonymous")}</span>
+              ${replyTarget ? `<span class="reply-to">→ @${escapeHTML(replyTarget.author)}</span>` : ""}
+              <span class="reply-time">${formatTime(r.createdAt)}</span>
+              ${isOwner ? `<button class="reply-delete">✕</button>` : ""}
             </div>
-            <div class="oc-text">${parent.text || ""}</div>
-            <div class="oc-actions">
-              <button class="oc-like ${parentHasLiked ? "liked" : ""}" id="parentLikeBtn">
-                <span>${parentHasLiked ? "❤️" : "🤍"}</span>
-                <span id="parentLikeCount">${parentLikes}</span>
+            <div class="reply-text">${escapeHTML(r.text || "")}</div>
+            <div class="reply-actions">
+              <button class="comment-like ${hasLiked ? "liked" : ""}">
+                <span class="like-icon">${hasLiked ? "❤️" : "🤍"}</span>
+                <span class="like-count">${likes}</span>
               </button>
-              <span class="oc-meta">${replies.length} repl${replies.length !== 1 ? "ies" : "y"}</span>
+              <button class="reply-btn">↩ Reply</button>
             </div>
           </div>
         `;
 
-        // Лайк на главный коммент
-        document.getElementById("parentLikeBtn").addEventListener("click", async () => {
+        div.querySelector(".comment-like").addEventListener("click", async () => {
           if (!currentUser) { alert("Please login to like."); return; }
           const comments = await getAll();
-          const idx = comments.findIndex(x => x.id === commentId);
+          const idx = comments.findIndex(x => x.id === r.id);
           if (idx === -1) return;
           const lb = comments[idx].likedBy || [];
           if (lb.includes(currentUser.email)) {
@@ -314,132 +373,69 @@
           await loadPage();
         });
 
-        document.getElementById("repliesTitle").textContent =
-          `${replies.length} Repl${replies.length !== 1 ? "ies" : "y"}`;
+        div.querySelector(".reply-btn").addEventListener("click", () => {
+          replyingToId = r.id;
+          replyingToAuthor = r.author;
+          const label = document.getElementById("replyingToLabel");
+          label.textContent = `↩ Replying to @${r.author}`;
+          label.style.display = "block";
+          const input = document.getElementById("replyInput");
+          input.placeholder = `Reply to @${r.author}...`;
+          input.focus();
+        });
 
-        const list = document.getElementById("repliesList");
-        if (!replies.length) {
-          list.innerHTML = `<div class="empty-replies">No replies yet. Be the first!</div>`;
-        } else {
-          list.innerHTML = "";
-          replies.forEach(r => {
-            const isOwner = currentUser && (currentUser.user_metadata?.full_name === r.author || currentUser.email === r.author);
-            const likes = r.likes || 0;
-            const likedBy = r.likedBy || [];
-            const hasLiked = currentUser && likedBy.includes(currentUser.email);
-
-            // Находим на кого отвечал
-            const replyTarget = r.parentId !== commentId
-              ? allComments.find(x => x.id === r.parentId)
-              : null;
-
-            const div = document.createElement("div");
-            div.className = "reply-item";
-            div.innerHTML = `
-              <div class="reply-avatar">${(r.author || "A").charAt(0).toUpperCase()}</div>
-              <div class="reply-body">
-                <div class="reply-header">
-                  <span class="reply-author">${r.author || "Anonymous"}</span>
-                  ${replyTarget ? `<span class="reply-to">→ @${replyTarget.author}</span>` : ""}
-                  <span class="reply-time">${formatTime(r.createdAt)}</span>
-                  ${isOwner ? `<button class="reply-delete">✕</button>` : ""}
-                </div>
-                <div class="reply-text">${r.text || ""}</div>
-                <div class="reply-actions">
-                  <button class="comment-like ${hasLiked ? "liked" : ""}">
-                    <span class="like-icon">${hasLiked ? "❤️" : "🤍"}</span>
-                    <span class="like-count">${likes}</span>
-                  </button>
-                  <button class="reply-btn">↩ Reply</button>
-                </div>
-              </div>
-            `;
-
-            // Лайк ответа
-            div.querySelector(".comment-like").addEventListener("click", async () => {
-              if (!currentUser) { alert("Please login to like."); return; }
-              const comments = await getAll();
-              const idx = comments.findIndex(x => x.id === r.id);
-              if (idx === -1) return;
-              const lb = comments[idx].likedBy || [];
-              if (lb.includes(currentUser.email)) {
-                comments[idx].likedBy = lb.filter(e => e !== currentUser.email);
-                comments[idx].likes = Math.max(0, (comments[idx].likes || 1) - 1);
-              } else {
-                comments[idx].likedBy = [...lb, currentUser.email];
-                comments[idx].likes = (comments[idx].likes || 0) + 1;
-              }
-              await sb.from("reports").update({ comments }).eq("id", reportId);
-              await loadPage();
-            });
-
-            // Ответить на ответ
-            div.querySelector(".reply-btn").addEventListener("click", () => {
-              replyingToId = r.id;
-              replyingToAuthor = r.author;
-              const label = document.getElementById("replyingToLabel");
-              label.textContent = `↩ Replying to @${r.author}`;
-              label.style.display = "block";
-              const input = document.getElementById("replyInput");
-              input.placeholder = `Reply to @${r.author}...`;
-              input.focus();
-            });
-
-            // Удаление
-            const delBtn = div.querySelector(".reply-delete");
-            if (delBtn) {
-              delBtn.addEventListener("click", async () => {
-                if (!confirm("Delete this reply?")) return;
-                const comments = await getAll();
-                await sb.from("reports").update({
-                  comments: comments.filter(x => x.id !== r.id)
-                }).eq("id", reportId);
-                await loadPage();
-              });
-            }
-
-            list.appendChild(div);
+        const delBtn = div.querySelector(".reply-delete");
+        if (delBtn) {
+          delBtn.addEventListener("click", async () => {
+            if (!confirm("Delete this reply?")) return;
+            const comments = await getAll();
+            await sb.from("reports").update({
+              comments: comments.filter(x => x.id !== r.id)
+            }).eq("id", reportId);
+            await loadPage();
           });
         }
-      }
 
-      await loadPage();
-
-      // Отправить ответ
-      const sendReply = async () => {
-        if (!currentUser) { alert("Please login to reply."); return; }
-        const input = document.getElementById("replyInput");
-        const text = input.value.trim();
-        if (!text) return;
-
-        const comments = await getAll();
-        comments.push({
-          id: Date.now().toString(),
-          parentId: replyingToId,
-          author: userName,
-          text,
-          createdAt: new Date().toISOString(),
-          likes: 0,
-          likedBy: [],
-        });
-        await sb.from("reports").update({ comments }).eq("id", reportId);
-        input.value = "";
-
-        // Сброс — снова отвечаем на главный
-        replyingToId = commentId;
-        replyingToAuthor = null;
-        const label = document.getElementById("replyingToLabel");
-        label.style.display = "none";
-        input.placeholder = "Write a reply...";
-
-        await loadPage();
-      };
-
-      document.getElementById("replySendBtn").addEventListener("click", sendReply);
-      document.getElementById("replyInput").addEventListener("keydown", (e) => {
-        if (e.key === "Enter") sendReply();
+        list.appendChild(div);
       });
+    }
+  }
+
+  await loadPage();
+
+  const sendReply = async () => {
+    if (!currentUser) { alert("Please login to reply."); return; }
+    const input = document.getElementById("replyInput");
+    const text = input.value.trim();
+    if (!text) return;
+
+    const comments = await getAll();
+    comments.push({
+      id: Date.now().toString(),
+      parentId: replyingToId,
+      author: userName,
+      text,
+      createdAt: new Date().toISOString(),
+      likes: 0,
+      likedBy: [],
     });
-  </script>
+    await sb.from("reports").update({ comments }).eq("id", reportId);
+    input.value = "";
+
+    replyingToId = commentId;
+    replyingToAuthor = null;
+    const label = document.getElementById("replyingToLabel");
+    label.style.display = "none";
+    input.placeholder = "Write a reply...";
+
+    await loadPage();
+  };
+
+  document.getElementById("replySendBtn").addEventListener("click", sendReply);
+  document.getElementById("replyInput").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") sendReply();
+  });
+});
+</script>
 </body>
 </html>
