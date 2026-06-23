@@ -1,453 +1,439 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profile | EcoShymkent</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-  <style>
-    .profile-shell {
-      width: min(780px, 96%);
-      margin: 0 auto;
-      padding: 2.5rem 0 3rem;
-    }
-    .profile-hero {
-      background: var(--hero-grad);
-      border-radius: 24px;
-      padding: 2rem;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      box-shadow: 0 18px 45px rgba(22, 57, 98, 0.2);
-      margin-bottom: 1.5rem;
-    }
-    .profile-avatar {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      border: 2px solid rgba(255,255,255,0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      font-weight: 800;
-      color: #fff;
-      flex-shrink: 0;
-    }
-    .profile-hero-info h1 {
-      margin: 0 0 0.25rem;
-      font-size: 1.7rem;
-      color: #fff;
-    }
-    .profile-hero-info p {
-      margin: 0;
-      color: rgba(255,255,255,0.8);
-      font-size: 0.95rem;
-    }
-    .profile-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.2rem;
-      text-align: center;
-      box-shadow: 0 8px 24px rgba(17, 40, 73, 0.06);
-    }
-    .stat-card .stat-num {
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--primary);
-      line-height: 1;
-    }
-    .stat-card .stat-label {
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-top: 0.3rem;
-    }
-    /* Вкладки */
-    .profile-tabs {
-      display: flex;
-      gap: 0.35rem;
-      background: #f0f4fb;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 0.28rem;
-      margin-bottom: 1.25rem;
-      width: fit-content;
-    }
-    .tab-btn {
-      border: none;
-      background: transparent;
-      border-radius: 999px;
-      padding: 0.5rem 1.1rem;
-      font-weight: 600;
-      font-size: 0.88rem;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all 0.18s;
-    }
-    .tab-btn.active {
-      background: #fff;
-      color: var(--primary);
-      box-shadow: 0 2px 8px rgba(17,40,73,0.1);
-    }
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
-    /* Репорты */
-    .profile-reports {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.2rem;
-      box-shadow: 0 8px 24px rgba(17, 40, 73, 0.06);
-      margin-bottom: 1.5rem;
-    }
-    .profile-reports h3 { margin: 0 0 1rem; font-size: 1.1rem; }
-    .profile-report-item {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 0.8rem;
-      margin-bottom: 0.6rem;
-      background: #fbfffc;
-    }
-    .profile-report-item:last-child { margin-bottom: 0; }
-    .profile-report-item strong { display: block; margin-bottom: 0.2rem; }
-    .profile-report-item p { margin: 0; font-size: 0.88rem; color: var(--muted); }
-    /* Настройки */
-    .settings-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.4rem;
-      box-shadow: 0 8px 24px rgba(17, 40, 73, 0.06);
-      margin-bottom: 1.25rem;
-    }
-    .settings-card h3 {
-      margin: 0 0 1rem;
-      font-size: 1rem;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .settings-form {
-      display: grid;
-      gap: 0.75rem;
-    }
-    .settings-form label {
-      display: grid;
-      gap: 0.3rem;
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--muted);
-    }
-    .settings-form input {
-      margin-top: 0;
-      border-radius: 10px;
-      padding: 0.6rem 0.8rem;
-      border: 1px solid var(--border);
-      font: inherit;
-      font-size: 0.95rem;
-      background: #fff;
-    }
-    .settings-form input:focus { outline: 2px solid var(--ring); }
-    .settings-msg {
-      font-size: 0.88rem;
-      min-height: 1.2rem;
-      margin-top: 0.25rem;
-    }
-    .settings-msg.ok { color: var(--primary); }
-    .settings-msg.err { color: #dc2626; }
-    .btn-danger {
-      background: #dc2626;
-      color: #fff;
-      border-color: #dc2626;
-      box-shadow: 0 8px 20px rgba(220, 38, 38, 0.25);
-    }
-    .btn-danger:hover { background: #b91c1c; }
-    .profile-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; }
-    .danger-zone {
-      border: 1px solid #fecaca;
-      background: #fff5f5;
-      border-radius: 16px;
-      padding: 1.2rem;
-    }
-    .danger-zone h3 { color: #dc2626; margin: 0 0 0.75rem; font-size: 1rem; }
-    @media (max-width: 600px) {
-      .profile-stats { grid-template-columns: 1fr 1fr; }
-      .profile-hero { flex-direction: column; text-align: center; }
-      .profile-tabs { width: 100%; justify-content: center; }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Profile | EcoShymkent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+.profile-shell {
+width: min(780px, 96%);
+margin: 0 auto;
+padding: 2.5rem 0 3rem;
+}
+.profile-hero {
+background: var(--hero-grad);
+border-radius: 24px;
+padding: 2rem;
+color: #fff;
+display: flex;
+align-items: center;
+gap: 1.5rem;
+box-shadow: 0 18px 45px rgba(22, 57, 98, 0.2);
+margin-bottom: 1.5rem;
+}
+.profile-avatar {
+width: 72px;
+height: 72px;
+border-radius: 50%;
+background: rgba(255,255,255,0.2);
+border: 2px solid rgba(255,255,255,0.4);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 2rem;
+font-weight: 800;
+color: #fff;
+flex-shrink: 0;
+}
+.profile-hero-info h1 {
+margin: 0 0 0.25rem;
+font-size: 1.7rem;
+color: #fff;
+}
+.profile-hero-info p {
+margin: 0;
+color: rgba(255,255,255,0.8);
+font-size: 0.95rem;
+}
+.profile-stats {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 1rem;
+margin-bottom: 1.5rem;
+}
+.stat-card {
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: 16px;
+padding: 1.2rem;
+text-align: center;
+box-shadow: 0 8px 24px rgba(17, 40, 73, 0.06);
+}
+.stat-card .stat-num {
+font-size: 2rem;
+font-weight: 800;
+color: var(--primary);
+line-height: 1;
+}
+.stat-card .stat-label {
+font-size: 0.82rem;
+color: var(--muted);
+margin-top: 0.3rem;
+}
+/* Вкладки */
+.profile-tabs {
+display: flex;
+gap: 0.35rem;
+background: #f0f4fb;
+border: 1px solid var(--border);
+border-radius: 999px;
+padding: 0.28rem;
+margin-bottom: 1.25rem;
+width: fit-content;
+}
+.tab-btn {
+border: none;
+background: transparent;
+border-radius: 999px;
+padding: 0.5rem 1.1rem;
+font-weight: 600;
+font-size: 0.88rem;
+color: var(--muted);
+cursor: pointer;
+transition: all 0.18s;
+}
+.tab-btn.active {
+background: #fff;
+color: var(--primary);
+box-shadow: 0 2px 8px rgba(17,40,73,0.1);
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+/* Репорты */
+.profile-reports {
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: 16px;
+padding: 1.2rem;
+box-shadow: 0 8px 24px rgba(17, 40, 73, 0.06);
+margin-bottom: 1.5rem;
+}
+.profile-reports h3 { margin: 0 0 1rem; font-size: 1.1rem; }
+.profile-report-item {
+border: 1px solid var(--border);
+border-radius: 12px;
+padding: 0.8rem;
+margin-bottom: 0.6rem;
+background: #fbfffc;
+}
+.profile-report-item:last-child { margin-bottom: 0; }
+.profile-report-item strong { display: block; margin-bottom: 0.2rem; }
+.profile-report-item p { margin: 0; font-size: 0.88rem; color: var(--muted); }
+/* Настройки */
+.settings-card {
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: 16px;
+padding: 1.4rem;
+box-shadow: 0 8px 24px rgba(17, 40, 73, 0.06);
+margin-bottom: 1.25rem;
+}
+.settings-card h3 {
+margin: 0 0 1rem;
+font-size: 1rem;
+color: var(--text);
+display: flex;
+align-items: center;
+gap: 0.5rem;
+}
+.settings-form {
+display: grid;
+gap: 0.75rem;
+}
+.settings-form label {
+display: grid;
+gap: 0.3rem;
+font-size: 0.88rem;
+font-weight: 600;
+color: var(--muted);
+}
+.settings-form input {
+margin-top: 0;
+border-radius: 10px;
+padding: 0.6rem 0.8rem;
+border: 1px solid var(--border);
+font: inherit;
+font-size: 0.95rem;
+background: #fff;
+}
+.settings-form input:focus { outline: 2px solid var(--ring); }
+.settings-msg {
+font-size: 0.88rem;
+min-height: 1.2rem;
+margin-top: 0.25rem;
+}
+.settings-msg.ok { color: var(--primary); }
+.settings-msg.err { color: #dc2626; }
+.btn-danger {
+background: #dc2626;
+color: #fff;
+border-color: #dc2626;
+box-shadow: 0 8px 20px rgba(220, 38, 38, 0.25);
+}
+.btn-danger:hover { background: #b91c1c; }
+.profile-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; }
+.danger-zone {
+border: 1px solid #fecaca;
+background: #fff5f5;
+border-radius: 16px;
+padding: 1.2rem;
+}
+.danger-zone h3 { color: #dc2626; margin: 0 0 0.75rem; font-size: 1rem; }
+@media (max-width: 600px) {
+.profile-stats { grid-template-columns: 1fr 1fr; }
+.profile-hero { flex-direction: column; text-align: center; }
+.profile-tabs { width: 100%; justify-content: center; }
+}
+</style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="brand" href="index.html">EcoShymkent</a>
-      <nav class="site-nav">
-        <a href="index.html">Home</a>
-        <a href="index.html#report">Report Pollution</a>
-        <a href="index.html#achievements">Achievements</a>
-        <a href="#" id="logoutBtn">Logout</a>
-      </nav>
+<header class="site-header">
+<div class="container nav-wrap">
+<a class="brand" href="index.html">EcoShymkent</a>
+<nav class="site-nav">
+<a href="index.html">Home</a>
+<a href="index.html#report">Report Pollution</a>
+<a href="index.html#achievements">Achievements</a>
+<a href="#" id="logoutBtn">Logout</a>
+</nav>
+</div>
+</header>
+<main>
+<div class="profile-shell">
+
+  <div class="profile-hero">
+    <div class="profile-avatar" id="profileAvatar">?</div>
+    <div class="profile-hero-info">
+      <h1 id="profileName">Loading...</h1>
+      <p id="profileEmail"></p>
+      <p id="profileJoined" style="margin-top:0.3rem;font-size:0.82rem;opacity:0.75"></p>
     </div>
-  </header>
+  </div>
 
-  <main>
-    <div class="profile-shell">
-
-      <!-- Герой -->
-      <div class="profile-hero">
-        <div class="profile-avatar" id="profileAvatar">?</div>
-        <div class="profile-hero-info">
-          <h1 id="profileName">Loading...</h1>
-          <p id="profileEmail"></p>
-          <p id="profileJoined" style="margin-top:0.3rem;font-size:0.82rem;opacity:0.75"></p>
-        </div>
-      </div>
-
-      <!-- Статистика -->
-      <div class="profile-stats">
-        <div class="stat-card">
-          <div class="stat-num" id="statTotal">—</div>
-          <div class="stat-label">Total Reports</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num" id="statCompleted">—</div>
-          <div class="stat-label">Completed</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num" id="statOpen">—</div>
-          <div class="stat-label">Open / In Progress</div>
-        </div>
-      </div>
-
-      <!-- Вкладки -->
-      <div class="profile-tabs">
-        <button class="tab-btn active" data-tab="reports">📋 My Reports</button>
-        <button class="tab-btn" data-tab="settings">⚙️ Settings</button>
-      </div>
-
-      <!-- Вкладка: Репорты -->
-      <div class="tab-panel active" id="tab-reports">
-        <div class="profile-reports">
-          <h3>My Reports</h3>
-          <div id="myReportsList"><p style="color:var(--muted)">Loading reports...</p></div>
-        </div>
-      </div>
-
-      <!-- Вкладка: Настройки -->
-      <div class="tab-panel" id="tab-settings">
-
-        <!-- Изменить имя -->
-        <div class="settings-card">
-          <h3>👤 Display Name</h3>
-          <div class="settings-form">
-            <label>New Name
-              <input type="text" id="newName" placeholder="Enter new display name" />
-            </label>
-            <button class="btn btn-primary" id="saveNameBtn" style="width:fit-content">Save Name</button>
-            <p class="settings-msg" id="nameMsg"></p>
-          </div>
-        </div>
-
-        <!-- Изменить пароль -->
-        <!-- Изменить пароль -->
-        <div class="settings-card">
-          <h3>🔒 Change Password</h3>
-          <div class="settings-form">
-            <label>Current Password
-              <input type="password" id="currentPassword" placeholder="Enter current password" />
-            </label>
-            <label>New Password
-              <input type="password" id="newPassword" placeholder="At least 6 characters" />
-            </label>
-            <label>Confirm New Password
-              <input type="password" id="confirmPassword" placeholder="Repeat new password" />
-            </label>
-            <button class="btn btn-primary" id="savePasswordBtn" style="width:fit-content">Update Password</button>
-            <p class="settings-msg" id="passwordMsg"></p>
-          </div>
-         </div>
-
-        <!-- Опасная зона -->
-        <div class="danger-zone">
-          <h3>⚠️ Danger Zone</h3>
-          <p style="font-size:0.88rem;color:var(--muted);margin:0 0 0.75rem">Logging out will end your current session.</p>
-          <button class="btn btn-danger" id="logoutBtn2">Logout</button>
-        </div>
-
-      </div>
-
+  <div class="profile-stats">
+    <div class="stat-card">
+      <div class="stat-num" id="statTotal">—</div>
+      <div class="stat-label">Total Reports</div>
     </div>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container footer-wrap">
-      <p>EcoShymkent | Citizen Ecology Awareness Platform</p>
-      <a href="index.html">Back to Home</a>
+    <div class="stat-card">
+      <div class="stat-num" id="statCompleted">—</div>
+      <div class="stat-label">Completed</div>
     </div>
-  </footer>
+    <div class="stat-card">
+      <div class="stat-num" id="statOpen">—</div>
+      <div class="stat-label">Open / In Progress</div>
+    </div>
+  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  
-  <script>
-    // Вкладки
-    document.querySelectorAll(".tab-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-        document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
-        btn.classList.add("active");
-        document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
-      });
-    });
+  <div class="profile-tabs">
+    <button class="tab-btn active" data-tab="reports">📋 My Reports</button>
+    <button class="tab-btn" data-tab="settings">⚙️ Settings</button>
+  </div>
 
-    window.addEventListener("load", async () => {
-      if (!window.supabase) return;
-      const sb = window.supabase.createClient(
-        "https://fdxnoirzzmmhqexhrttn.supabase.co",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkeG5vaXJ6em1taHFleGhydHRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4ODAyMTcsImV4cCI6MjA5MjQ1NjIxN30.4J6xKeQrj-OK34FaCdEHAsbgnONxv-JV8XUrgyhr4v4"
-      );
+  <div class="tab-panel active" id="tab-reports">
+    <div class="profile-reports">
+      <h3>My Reports</h3>
+      <div id="myReportsList"><p style="color:var(--muted)">Loading reports...</p></div>
+    </div>
+  </div>
 
-      const { data: { user }, error } = await sb.auth.getUser();
-      if (error || !user) { window.location.href = "login.html"; return; }
+  <div class="tab-panel" id="tab-settings">
 
-      const name = user.user_metadata?.full_name || "User";
-      const email = user.email || "";
-      const joined = new Date(user.created_at).toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" });
+    <div class="settings-card">
+      <h3>👤 Display Name</h3>
+      <div class="settings-form">
+        <label>New Name
+          <input type="text" id="newName" placeholder="Enter new display name" />
+        </label>
+        <button class="btn btn-primary" id="saveNameBtn" style="width:fit-content">Save Name</button>
+        <p class="settings-msg" id="nameMsg"></p>
+      </div>
+    </div>
 
-      document.getElementById("profileAvatar").textContent = name.charAt(0).toUpperCase();
-      document.getElementById("profileName").textContent = name;
-      document.getElementById("profileEmail").textContent = email;
-      document.getElementById("profileJoined").textContent = "Member since " + joined;
-      document.getElementById("newName").value = name;
+    <div class="settings-card">
+      <h3>🔒 Change Password</h3>
+      <div class="settings-form">
+        <label>Current Password
+          <input type="password" id="currentPassword" placeholder="Enter current password" />
+        </label>
+        <label>New Password
+          <input type="password" id="newPassword" placeholder="At least 6 characters" />
+        </label>
+        <label>Confirm New Password
+          <input type="password" id="confirmPassword" placeholder="Repeat new password" />
+        </label>
+        <button class="btn btn-primary" id="savePasswordBtn" style="width:fit-content">Update Password</button>
+        <p class="settings-msg" id="passwordMsg"></p>
+      </div>
+     </div>
 
-      // Загрузка репортов
-      const { data: reports } = await sb.from("reports").select("*").eq("reporter", name).order("created_at", { ascending: false });
-      const list = reports || [];
-      const completed = list.filter(r => r.status === "completed").length;
-      document.getElementById("statTotal").textContent = list.length;
-      document.getElementById("statCompleted").textContent = completed;
-      document.getElementById("statOpen").textContent = list.length - completed;
+    <div class="danger-zone">
+      <h3>⚠️ Danger Zone</h3>
+      <p style="font-size:0.88rem;color:var(--muted);margin:0 0 0.75rem">Logging out will end your current session.</p>
+      <button class="btn btn-danger" id="logoutBtn2">Logout</button>
+    </div>
 
-      const container = document.getElementById("myReportsList");
-      if (!list.length) {
-        container.innerHTML = `<p style="color:var(--muted)">No reports yet. <a href="index.html#report">Submit your first one!</a></p>`;
-      } else {
-        container.innerHTML = list.map(r => {
-          const status = r.status || "open";
-          const statusClass = status === "completed" ? "status-completed" : status === "in_progress" ? "status-progress" : "status-open";
-          const date = new Date(r.created_at).toLocaleDateString("en-GB");
-          return `
-            <div class="profile-report-item">
-              <strong>${r.location || "Unknown location"}</strong>
-              <p>${r.address || ""}${r.description ? " — " + r.description : ""}</p>
-              <div style="margin-top:0.4rem;display:flex;gap:0.4rem;flex-wrap:wrap">
-                <span class="badge ${statusClass}">Status: ${status.replace("_", " ")}</span>
-                <span class="badge">${date}</span>
-              </div>
-            </div>`;
-        }).join("");
-      }
+  </div>
 
-      // Сохранить имя
-      document.getElementById("saveNameBtn").addEventListener("click", async () => {
-        const newName = document.getElementById("newName").value.trim();
-        const msg = document.getElementById("nameMsg");
-        if (newName.length < 2) {
-          msg.className = "settings-msg err";
-          msg.textContent = "Name must be at least 2 characters.";
-          return;
-        }
-        const { error } = await sb.auth.updateUser({ data: { full_name: newName } });
-        if (error) {
-          msg.className = "settings-msg err";
-          msg.textContent = "Error: " + error.message;
-        } else {
-          msg.className = "settings-msg ok";
-          msg.textContent = "Name updated successfully!";
-          document.getElementById("profileName").textContent = newName;
-          document.getElementById("profileAvatar").textContent = newName.charAt(0).toUpperCase();
-        }
-      });
-
-      // Сменить пароль
-      // Сменить пароль
-document.getElementById("savePasswordBtn").addEventListener("click", async () => {
-  const currentPass = document.getElementById("currentPassword").value;
-  const newPass = document.getElementById("newPassword").value;
-  const confirmPass = document.getElementById("confirmPassword").value;
-  const msg = document.getElementById("passwordMsg");
-
-  if (!currentPass) {
-    msg.className = "settings-msg err";
-    msg.textContent = "Please enter your current password.";
-    return;
-  }
-  if (newPass.length < 6) {
-    msg.className = "settings-msg err";
-    msg.textContent = "New password must be at least 6 characters.";
-    return;
-  }
-  if (newPass !== confirmPass) {
-    msg.className = "settings-msg err";
-    msg.textContent = "Passwords do not match.";
-    return;
-  }
-  if (currentPass === newPass) {
-    msg.className = "settings-msg err";
-    msg.textContent = "New password must be different from current.";
-    return;
-  }
-
-  msg.className = "settings-msg";
-  msg.textContent = "Verifying...";
-
-  // Верифицируем текущий пароль через повторный логин
-  const { error: signInError } = await sb.auth.signInWithPassword({
-    email: user.email,
-    password: currentPass,
-  });
-
-  if (signInError) {
-    msg.className = "settings-msg err";
-    msg.textContent = "Current password is incorrect.";
-    return;
-  }
-
-  // Обновляем пароль
-  const { error } = await sb.auth.updateUser({ password: newPass });
-  if (error) {
-    msg.className = "settings-msg err";
-    msg.textContent = "Error: " + error.message;
-  } else {
-    msg.className = "settings-msg ok";
-    msg.textContent = "Password updated successfully!";
-    document.getElementById("currentPassword").value = "";
-    document.getElementById("newPassword").value = "";
-    document.getElementById("confirmPassword").value = "";
-  }
+</div>
+</main>
+<footer class="site-footer">
+<div class="container footer-wrap">
+<p>EcoShymkent | Citizen Ecology Awareness Platform</p>
+<a href="index.html">Back to Home</a>
+</div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+document.querySelectorAll(".tab-btn").forEach(btn => {
+btn.addEventListener("click", () => {
+document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+btn.classList.add("active");
+document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+});
 });
 
-      // Logout
-      const logout = async (e) => {
-        e.preventDefault();
-        await sb.auth.signOut();
-        window.location.href = "login.html";
-      };
-      document.getElementById("logoutBtn").addEventListener("click", logout);
-      document.getElementById("logoutBtn2").addEventListener("click", logout);
-    });
-  </script>
+function escapeHTML(str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+window.addEventListener("load", async () => {
+  if (!window.supabase) return;
+  const sb = window.supabase.createClient(
+    "https://fdxnoirzzmmhqexhrttn.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkeG5vaXJ6em1taHFleGhydHRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4ODAyMTcsImV4cCI6MjA5MjQ1NjIxN30.4J6xKeQrj-OK34FaCdEHAsbgnONxv-JV8XUrgyhr4v4"
+  );
+
+  const { data: { user }, error } = await sb.auth.getUser();
+  if (error || !user) { window.location.href = "login.html"; return; }
+
+  const name = user.user_metadata?.full_name || "User";
+  const email = user.email || "";
+  const joined = new Date(user.created_at).toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" });
+
+  document.getElementById("profileAvatar").textContent = escapeHTML(name.charAt(0).toUpperCase());
+  document.getElementById("profileName").textContent = escapeHTML(name);
+  document.getElementById("profileEmail").textContent = escapeHTML(email);
+  document.getElementById("profileJoined").textContent = "Member since " + joined;
+  document.getElementById("newName").value = name;
+
+  const { data: reports } = await sb.from("reports").select("*").eq("reporter", name).order("created_at", { ascending: false });
+  const list = reports || [];
+  const completed = list.filter(r => r.status === "completed").length;
+  document.getElementById("statTotal").textContent = list.length;
+  document.getElementById("statCompleted").textContent = completed;
+  document.getElementById("statOpen").textContent = list.length - completed;
+
+  const container = document.getElementById("myReportsList");
+  if (!list.length) {
+    container.innerHTML = `<p style="color:var(--muted)">No reports yet. <a href="index.html#report">Submit your first one!</a></p>`;
+  } else {
+    container.innerHTML = list.map(r => {
+      const status = r.status || "open";
+      const statusClass = status === "completed" ? "status-completed" : status === "in_progress" ? "status-progress" : "status-open";
+      const date = new Date(r.created_at).toLocaleDateString("en-GB");
+      return `
+        <div class="profile-report-item">
+          <strong>${escapeHTML(r.location || "Unknown location")}</strong>
+          <p>${escapeHTML(r.address || "")}${r.description ? " — " + escapeHTML(r.description) : ""}</p>
+          <div style="margin-top:0.4rem;display:flex;gap:0.4rem;flex-wrap:wrap">
+            <span class="badge ${statusClass}">Status: ${status.replace("_", " ")}</span>
+            <span class="badge">${date}</span>
+          </div>
+        </div>`;
+    }).join("");
+  }
+
+  document.getElementById("saveNameBtn").addEventListener("click", async () => {
+    const newName = document.getElementById("newName").value.trim();
+    const msg = document.getElementById("nameMsg");
+    if (newName.length < 2) {
+      msg.className = "settings-msg err";
+      msg.textContent = "Name must be at least 2 characters.";
+      return;
+    }
+    const { error } = await sb.auth.updateUser({ data: { full_name: newName } });
+    if (error) {
+      msg.className = "settings-msg err";
+      msg.textContent = "Error: " + error.message;
+    } else {
+      msg.className = "settings-msg ok";
+      msg.textContent = "Name updated successfully!";
+      document.getElementById("profileName").textContent = newName;
+      document.getElementById("profileAvatar").textContent = newName.charAt(0).toUpperCase();
+    }
+  });
+
+document.getElementById("savePasswordBtn").addEventListener("click", async () => {
+const currentPass = document.getElementById("currentPassword").value;
+const newPass = document.getElementById("newPassword").value;
+const confirmPass = document.getElementById("confirmPassword").value;
+const msg = document.getElementById("passwordMsg");
+if (!currentPass) {
+msg.className = "settings-msg err";
+msg.textContent = "Please enter your current password.";
+return;
+}
+if (newPass.length < 6) {
+msg.className = "settings-msg err";
+msg.textContent = "New password must be at least 6 characters.";
+return;
+}
+if (newPass !== confirmPass) {
+msg.className = "settings-msg err";
+msg.textContent = "Passwords do not match.";
+return;
+}
+if (currentPass === newPass) {
+msg.className = "settings-msg err";
+msg.textContent = "New password must be different from current.";
+return;
+}
+msg.className = "settings-msg";
+msg.textContent = "Verifying...";
+
+const { error: signInError } = await sb.auth.signInWithPassword({
+email: user.email,
+password: currentPass,
+});
+if (signInError) {
+msg.className = "settings-msg err";
+msg.textContent = "Current password is incorrect.";
+return;
+}
+
+const { error } = await sb.auth.updateUser({ password: newPass });
+if (error) {
+msg.className = "settings-msg err";
+msg.textContent = "Error: " + error.message;
+} else {
+msg.className = "settings-msg ok";
+msg.textContent = "Password updated successfully!";
+document.getElementById("currentPassword").value = "";
+document.getElementById("newPassword").value = "";
+document.getElementById("confirmPassword").value = "";
+}
+});
+
+  const logout = async (e) => {
+    e.preventDefault();
+    await sb.auth.signOut();
+    window.location.href = "login.html";
+  };
+  document.getElementById("logoutBtn").addEventListener("click", logout);
+  document.getElementById("logoutBtn2").addEventListener("click", logout);
+});
+</script>
 </body>
 </html>
