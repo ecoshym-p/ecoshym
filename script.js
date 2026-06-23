@@ -373,7 +373,14 @@ const saveReport = async (file) => {
   submitBtn.textContent = "Submit Report";
 };
 
+// --- ДОБАВЛЕНА ПРОВЕРКА РАЗМЕРА ФОТО ---
 const file = photoInput?.files?.[0];
+
+if (file && file.size > 5 * 1024 * 1024) {
+  alert("Файл слишком большой! Пожалуйста, выберите фото размером до 5 МБ.");
+  return;
+}
+
 await saveReport(file);
 });
 }
