@@ -74,7 +74,6 @@ if (diff < 604800) return Math.floor(diff / 86400) + "d ago";
 return d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
 }
 
-// ИСПРАВЛЕНИЕ 3: Лимит загрузки в 20 последних репортов
 async function fetchReports() {
 if (!sb) return [];
 const { data, error } = await sb.from("reports")
@@ -136,13 +135,12 @@ div.innerHTML = `
   </div>
 `;
 
-// ИСПРАВЛЕНИЕ 4 (частично): Блокировка кнопки лайка при клике
 div.querySelector(".comment-like").addEventListener("click", async (e) => {
   if (!currentUser) { alert("Please login to like comments."); return; }
   const btn = e.currentTarget;
   btn.disabled = true;
   
-  const comments = await getComments(reportId); // Запрашиваем свежие данные перед записью
+  const comments = await getComments(reportId);
   const idx = comments.findIndex(x => x.id === c.id);
   if (idx === -1) { btn.disabled = false; return; }
   
@@ -195,13 +193,12 @@ reports.forEach((report) => {
   const allComments = Array.isArray(report.comments) ? report.comments : [];
   const topComments = allComments.filter(c => !c.parentId);
 
-  const safePhotoSrc = report.photo && (report.photo.startsWith("http") || report.photo.startsWith("data:image/")) ? report.photo : "";
+  // ИСПРАВЛЕНИЕ: Убрал излишнюю строгую проверку URL
+  const safePhotoSrc = report.photo || ""; 
 
-  // ИСПРАВЛЕНИЕ 2: Проверка, является ли текущий юзер автором
   const isAuthor = currentUser && currentUser.user_metadata?.full_name === report.reporter;
   let statusHtml = `<span class="badge ${statusClass}">Status: ${String(status).replace("_", " ")}</span>`;
   
-  // Показываем выпадающий список только автору
   if (isAuthor) {
     statusHtml = `
       <label><span class="badge">Update status</span>
@@ -247,23 +244,23 @@ reports.forEach((report) => {
   const selectEl = item.querySelector(".status-select");
   if (selectEl) {
     selectEl.addEventListener("change", async (e) => {
-      await updateReportStatus(Number(report.id), e.target.value);
+      // ИСПРАВЛЕНИЕ: Убрал Number(), теперь ID передается правильно
+      await updateReportStatus(report.id, e.target.value);
       await renderReports();
       await renderAchievements();
     });
   }
 
-  // ИСПРАВЛЕНИЕ 4: Блокировка кнопки отправки и запрос свежих данных (защита от затирания комментов)
   item.querySelector(".new-comment-send").addEventListener("click", async (e) => {
     if (!currentUser) { alert("Please login to comment."); return; }
     const btn = e.currentTarget;
-    btn.disabled = true; // блокируем от двойного клика
+    btn.disabled = true; 
 
     const input = item.querySelector(".new-comment-input");
     const text = input.value.trim();
     if (!text) { btn.disabled = false; return; }
     
-    const comments = await getComments(report.id); // Запрашиваем перед самой вставкой
+    const comments = await getComments(report.id); 
     comments.push({
       id: Date.now().toString(),
       parentId: null,
@@ -324,7 +321,6 @@ const photoInput = document.getElementById("locationPhoto");
 const reporterInput = document.getElementById("reporterName");
 const submitBtn = reportForm.querySelector("button[type='submit']");
 
-// ИСПРАВЛЕНИЕ 1: Загрузка фото в Storage
 const saveReport = async (file) => {
   submitBtn.disabled = true;
   submitBtn.textContent = "Uploading...";
@@ -335,7 +331,6 @@ const saveReport = async (file) => {
     const fileExt = file.name.split('.').pop();
     const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
     
-    // Загружаем файл в корзину 'photos'
     const { data: uploadData, error: uploadError } = await sb.storage.from('photos').upload(fileName, file);
     
     if (uploadError) {
@@ -344,18 +339,20 @@ const saveReport = async (file) => {
       submitBtn.textContent = "Submit Report";
       return;
     }
-    // Получаем прямую публичную ссылку
     const { data: publicUrlData } = sb.storage.from('photos').getPublicUrl(fileName);
     photoUrl = publicUrlData.publicUrl;
   }
+
+  // ИСПРАВЛЕНИЕ: Жесткая привязка репорта к аккаунту, если юзер залогинен
+  const reportAuthor = currentUser ? fallback : ((reporterInput?.value || "").trim() || "Anonymous");
 
   const payload = {
     location: (locationInput?.value || "").trim(),
     address: (addressInput?.value || "").trim(),
     description: (descInput?.value || "").trim(),
-    reporter: (reporterInput?.value || "").trim() || fallback,
+    reporter: reportAuthor,
     status: "open", 
-    photo: photoUrl, // Теперь тут нормальный короткий URL
+    photo: photoUrl, 
     comments: [],
   };
 
@@ -373,7 +370,6 @@ const saveReport = async (file) => {
   submitBtn.textContent = "Submit Report";
 };
 
-// --- ДОБАВЛЕНА ПРОВЕРКА РАЗМЕРА ФОТО ---
 const file = photoInput?.files?.[0];
 
 if (file && file.size > 5 * 1024 * 1024) {
