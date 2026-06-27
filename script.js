@@ -87,7 +87,10 @@ return data || [];
 async function updateReportStatus(reportId, newStatus) {
 if (!sb) return;
 const { error } = await sb.from("reports").update({ status: newStatus }).eq("id", reportId);
-if (error) console.error("Status error:", error.message);
+if (error) {
+  alert("Error updating status: " + error.message);
+  console.error("Status error:", error.message);
+}
 }
 
 async function saveComments(reportId, comments) {
@@ -193,7 +196,6 @@ reports.forEach((report) => {
   const allComments = Array.isArray(report.comments) ? report.comments : [];
   const topComments = allComments.filter(c => !c.parentId);
 
-  // ИСПРАВЛЕНИЕ: Убрал излишнюю строгую проверку URL
   const safePhotoSrc = report.photo || ""; 
 
   const isAuthor = currentUser && currentUser.user_metadata?.full_name === report.reporter;
@@ -244,7 +246,6 @@ reports.forEach((report) => {
   const selectEl = item.querySelector(".status-select");
   if (selectEl) {
     selectEl.addEventListener("change", async (e) => {
-      // ИСПРАВЛЕНИЕ: Убрал Number(), теперь ID передается правильно
       await updateReportStatus(report.id, e.target.value);
       await renderReports();
       await renderAchievements();
@@ -343,7 +344,6 @@ const saveReport = async (file) => {
     photoUrl = publicUrlData.publicUrl;
   }
 
-  // ИСПРАВЛЕНИЕ: Жесткая привязка репорта к аккаунту, если юзер залогинен
   const reportAuthor = currentUser ? fallback : ((reporterInput?.value || "").trim() || "Anonymous");
 
   const payload = {
