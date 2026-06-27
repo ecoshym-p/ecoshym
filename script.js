@@ -322,10 +322,27 @@ const photoInput = document.getElementById("locationPhoto");
 const reporterInput = document.getElementById("reporterName");
 const submitBtn = reportForm.querySelector("button[type='submit']");
 
+const file = photoInput?.files?.[0];
+
+// ЗАЩИТА: Запрещаем гостям грузить фото (база всё равно отклонит, так хоть с понятной ошибкой)
+if (file && !currentUser) {
+  alert("Только зарегистрированные пользователи могут прикреплять фото! Пожалуйста, войдите в аккаунт.");
+  return;
+}
+
+if (file && file.size > 5 * 1024 * 1024) {
+  alert("Файл слишком большой! Пожалуйста, выберите фото размером до 5 МБ.");
+  return;
+}
+
 const saveReport = async (file) => {
   submitBtn.disabled = true;
   submitBtn.textContent = "Uploading...";
-  const fallback = currentUser?.user_metadata?.full_name || "Anonymous";
+  
+  // Жестко привязываем имя, чтобы 100% совпадало с профилем
+  const exactProfileName = currentUser?.user_metadata?.full_name || "User";
+  const reportAuthor = currentUser ? exactProfileName : ((reporterInput?.value || "").trim() || "Anonymous");
+
   let photoUrl = "";
 
   if (file) {
@@ -343,8 +360,6 @@ const saveReport = async (file) => {
     const { data: publicUrlData } = sb.storage.from('photos').getPublicUrl(fileName);
     photoUrl = publicUrlData.publicUrl;
   }
-
-  const reportAuthor = currentUser ? fallback : ((reporterInput?.value || "").trim() || "Anonymous");
 
   const payload = {
     location: (locationInput?.value || "").trim(),
@@ -369,13 +384,6 @@ const saveReport = async (file) => {
   submitBtn.disabled = false;
   submitBtn.textContent = "Submit Report";
 };
-
-const file = photoInput?.files?.[0];
-
-if (file && file.size > 5 * 1024 * 1024) {
-  alert("Файл слишком большой! Пожалуйста, выберите фото размером до 5 МБ.");
-  return;
-}
 
 await saveReport(file);
 });
