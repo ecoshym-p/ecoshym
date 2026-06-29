@@ -1,11 +1,9 @@
-// === 1. ИНИЦИАЛИЗАЦИЯ SUPABASE ===
+
 const supabaseUrl = 'https://fdxnoirzzmmhqexhrttn.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkeG5vaXJ6em1taHFleGhydHRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4ODAyMTcsImV4cCI6MjA5MjQ1NjIxN30.4J6xKeQrj-OK34FaCdEHAsbgnONxv-JV8XUrgyhr4v4';
 
-// Ждём загрузки страницы
 document.addEventListener("DOMContentLoaded", () => {
 
-  // Проверяем что Supabase загрузился
   if (!window.supabase) {
     console.error("Supabase CDN не загрузился!");
     return;
@@ -23,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
     el.style.color = isSuccess ? "green" : "red";
   }
 
-  // Кнопки показа пароля
   document.querySelectorAll(".toggle-pass").forEach((btn) => {
     btn.addEventListener("click", () => {
       const input = document.getElementById(btn.dataset.target);
@@ -34,7 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // === РЕГИСТРАЦИЯ ===
   const registerForm = document.getElementById("registerForm");
   if (registerForm) {
     registerForm.addEventListener("submit", async (e) => {
@@ -67,7 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // === ЛОГИН ===
   const loginForm = document.getElementById("loginForm");
   if (loginForm) {
     loginForm.addEventListener("submit", async (e) => {
@@ -90,7 +85,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // === ПРОФИЛЬ ===
   const profileContent = document.getElementById("profileContent");
   if (profileContent) {
     (async () => {
@@ -108,7 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })();
   }
 
-  // === ВЫХОД ===
   const logoutBtn = document.getElementById("logoutBtn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", async () => {
@@ -117,4 +110,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-}); // конец DOMContentLoaded
+}); 
