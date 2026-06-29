@@ -313,7 +313,6 @@ window.addEventListener("load", async () => {
   const { data: { user }, error } = await sb.auth.getUser();
   if (error || !user) { window.location.href = "login.html"; return; }
 
-  // Жесткая синхронизация имени
   const name = user.user_metadata?.full_name || "User";
   const email = user.email || "";
   const joined = new Date(user.created_at).toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" });
@@ -340,7 +339,6 @@ window.addEventListener("load", async () => {
       const statusClass = status === "completed" ? "status-completed" : status === "in_progress" ? "status-progress" : "status-open";
       const date = new Date(r.created_at).toLocaleDateString("en-GB");
       
-      // ИСПРАВЛЕНИЕ: Добавлен вывод фото в профиле
       const safePhotoSrc = r.photo || ""; 
 
       return `
